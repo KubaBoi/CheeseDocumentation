@@ -1,0 +1,59 @@
+body {
+    color: white;
+    background-color: #2b2b2b;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+ol.num { 
+    counter-reset: item;
+    text-align: left;
+    margin-bottom: 100px;
+    margin-right: 100px;
+}
+li.num{ display: block }
+li.num:before { 
+    content: counters(item, ".") " ";
+    counter-increment: item; 
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.hd2 {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.hd3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+pre {
+    border: 1px solid #777;
+    border-radius: 5px;
+    min-width: 300px;
+    max-width: fit-content;
+    padding: 10px;
+}
+
+.note {
+    background-color: #9076cc;
+    border: 1px solid #606fc5;
+    border-radius: 5px;
+    max-width: fit-content;
+    margin: 5px;
+    padding: 10px;
+}
+
+.needBuild {
+    background-color: #df6b6b;
+    border: 1px;
+    border-radius: 5px;
+    max-width: fit-content;
+    margin: 5px;
+    padding: 10px;
+}
+
+figcaption {
+    font-weight: bold;
+}

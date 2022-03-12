@@ -1,14 +1,499 @@
-<!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
-<title>Cheese Application</title>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="prism.css">
+    <title>Cheese Documentation</title>
 </head>
 <body>
+<script src="prism.js"></script>
 
-<h1>Welcome to Dairy Development</h1>
-<h2>Everything seems good :)</h2>
-<p>You are reading this page and that's great because it means that your Cheese Application is configured right.</p>
-<p>Thank you for using Cheese Framework.</p>
+<h1>Cheese Framework Documentation</h1>
+<ol class="num">
+    <li class="num">
+        <span class="hd2">Introduction</span>
+        <p>
+            Cheese Framework is open source library for creating web applications with database connection (like Spring in Java).  
+            It can save a lot of time because developer does not have to making http server or creating whole database reader. 
+            Cheese is using pydobc library for database access so it is able to connect to most of modern database engines.
+        </p>
+    </li>
+    <li class="num">
+        <span class="hd2">Installation</span><br><br>
+        <ol class="num">
+            <li class="num">
+                <span class="hd3">Download</span>
+                <p>
+                    Download Cheese Framework <a href="https://github.com/KubaBoi/CheeseFramework" target="_blank">here</a> via git.<br>
+                    You will need install some python libraries via pip:
+                    <ul>
+                        <li>pip install pyodbc - <a href="https://pypi.org/project/pyodbc/" target="_blank">Documentation</a></li>
+                        <li>pip install psycopg2-binary - <a href="https://pypi.org/project/psycopg2/" target="_blank">Documentation</a></li>
+                        <li>pip install psycopg2 - <a href="https://pypi.org/project/psycopg2/" target="_blank">Documentation</a></li>
+                    </ul><br>
+                    And that's all for downloading :).
+                </p>
+            </li>
+            <li class="num">
+                <span class="hd3">Creating new project</span>
+                <p>
+                    Go in directory where you downloaded Cheese and into CheeseFramework folder.
+                    <figure>
+                        <figcaption>Open cmd and run:</figcaption>
+                        <pre><code class="language-markup">
+python cheeser.py -b CheeseApplication
+                    </code></pre></figure><br>
+                    This will create project in <i>projects</i> folder.<br><br>
+                    <figure>
+                        <figcaption>Note:</figcaption>
+                        <div class="note">
+                            Some changes needs rebuilding your application to be applied. I will marks them as:
+                            <div class="needBuild">NEED BUILD</div>
+                        </div>
+                    </figure><br>
+                </p>
+            </li>
+            <li class="num">
+                <span class="hd3">Run Cheese application</span>
+                <p>
+                    Whole application turns on by python script {name of your project}/src/{name of your project}.py.
+                    <figure>
+                        <figcaption>So in command:</figcaption>
+                        <pre><code class="language-markup">
+python projects/CheeseApplication/src/CheeseApplication.py
+                    </code></pre></figure><br>
+                    <img src="/images/firstRun.png" width="800", height="600"><br><br>
+                    And you can check if everything works by typing into your web browser <a href="http://localhost:8080">localhost:8080</a>.
+                </p>
+            </li>
+        </ol>
+    </li>
+    <li class="num">
+        <span class="hd2">Project structure</span>
+        <p>
+            In your project folder should be one folder named <i>src</i> and two files <i>.gitignore</i>, <i>appSettings</i>.<br>
+            Folder <i>src</i> contains source code of your application. 
+            <ul>
+                <li>
+                    <b>cheese</b><br><br>
+                    Do not touch anything in this folder. There are files guaranteeing fluent and "bugless" run.<br>
+                    Also everything is overwriten during build (command from 2.2).
+                </li><br>
+                <li>
+                    <b>python</b><br><br>
+                    Folder for your python code. It means API controllers, database repositories, database models and 
+                    whatever your application and you will need.
+                    You can see file <i>authorization.py</i>. It will be described later.<br>
+                    Create your own folder structure, it does not matter where files are located.
+                    Mechanism in cheeser.py is scanning whole folder <i>python</i>
+                </li><br>
+                <li>
+                    <b>resources</b><br><br>
+                    Resources folder contains anything non-python you will need.<br> 
+                    Inside folder <i>web</i> can be files served by CheeseServer. So html, javascript, css contains there.
+                    Of course any other files you want to serve.<br>
+                    Also there are <i>index.html</i> and folder <i>errors</i>. Those are default files for you to know everything works fine after first run.
+                </li><br>
+                <li>
+                    <b>tests</b><br><br>
+                    Work in progress :(
+                </li><br>
+                <li>
+                    <b>{name of your project}.py</b><br><br>
+                    This is THE file that runs your application. If you need do anything for initialization do it over here.<br><br>
+                    <figure>
+                        <figcaption>Application main file:</figcaption>
+                        <pre><code class="language-python">
+if __name__ == "__main__":
+    Cheese.init()
 
+    """
+    here you can do anything
+    """
+
+    Cheese.serveForever()
+                    </code></pre></figure>
+                </li>
+            </ul><br>
+            That's all about structure of Cheese application. File <i>appSettings.json</i> will be described later.
+        </p>
+    </li>
+    <li class="num">
+        <span class="hd2">Project settings</span>
+        <p>
+            All settings are stored in file <i>appSettings.json</i> and looks like this:<br>
+            <figure>
+                <figcaption>Default appSettings.json:</figcaption>
+                <pre><code class="language-json">
+"host": "0.0.0.0",
+"port": 8000,
+"dbDriver": "postgres",
+"dbHost": "localhost",
+"dbName": "database",
+"dbUser": "postgres",
+"dbPassword": "admin",
+"dbPort": 5432,
+"allowCommit": true,
+"allowMultiThreading": true,
+"allowCORS": false,
+"allowDB": false
+                </code></pre></figure>
+            <br>
+            Most of those attributes are pretty intuitive so I will describe only some of them.<br><br>
+            <ul>
+                <li>
+                    <b>dbDriver</b><br><br>
+                    Driver for your database server. You can find them in 
+                    <a href="https://github.com/mkleehammer/pyodbc/wiki">pyodbc documentation</a>.
+                </li><br>
+                <li>
+                    <b>allowCommit</b><br><br>
+                    This is a rule that allows your application changing values in database. If allowCommit is false 
+                    application would not be able to execute SQL commands like UPDATE, INSERT etc...
+                </li><br>
+                <li>
+                    <b>allowMultiThreading</b><br><br>
+                    If true Cheese server would be able to handle more request at once. Otherwise clients have to wait little more.
+                </li><br>
+                <li>
+                    <b>allowCORS</b><br><br>
+                    If true Cheese server would be able to practise CORS. 
+                    <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">Learn about CORS</a>.
+                </li><br>
+                <li>
+                    <b>allowDB</b><br><br>
+                    Do not need database in your application? No problem, just leave this rule false and Cheese will not 
+                    connect to it.
+                </li>
+            </ul>
+        </p>
+    </li>
+    <li class="num">
+        <span class="hd2">Python code</span>
+        <p>
+            Reminding that every python code needs to be in <i>src/python</i> folder.
+        </p>
+        <ol class="num">
+            <li class="num">
+                <span class="hd3">API Controllers</span>
+                <p>
+                    Controllers are classes that handle requested endpoints. I recommend to create one folder just 
+                    for your controllers but it is not necessary.
+                </p>
+                <ol class="num">
+                    <li class="num">
+                        <span class="hd3">Creating controller</span>
+                        <div class="needBuild">NEED BUILD</div>
+                        <p>
+                            As I said, controllers are classes. So create class that inherits from <i>CheeseController</i>.<br>
+                            To let cheeser know that this class is really controller you have to anotate it with #@controller annotation.
+                            <b>#@controller</b> annotation follows part of endpoint like this:
+                            <figure>
+                                <figcaption>Controller annotation:</figcaption>
+                                <pre><code class="language-python">
+#@controller /apiController
+class apiController(CheeseController):
+                            </code></pre></figure>
+                        </p>
+                    </li>
+                    <li class="num">
+                        <span class="hd3">Methods of controller</span>
+                        <div class="needBuild">NEED BUILD</div>
+                        <p>
+                            There is sctrict scheme how should method in controller looks so it can handle endpoint.<br>
+                            Method have to be static, so add @staticmethod annotation above method definition.<br>
+                            Method have to be anotated. Annotation for endpoints contains HTTP method (right now only GET and POST) 
+                            and endpoint.<br>
+                            Method have to have 3 arguments: server, path, auth.
+                            <figure>
+                                <figcaption>Endpoint method in controller definiton:</figcaption>
+                                <pre><code class="language-python">
+#@post /apiEndpoint
+@staticmethod
+def getFiles(server, path, auth):
+                            </code></pre></figure>
+                        </p>
+                    </li>
+                    <li class="num">
+                        <span class="hd3">Method arguments</span>
+                        <p>
+                            So what are those 3 arguments? Argument number one <i>server</i> is instance of Cheese server handeling 
+                            this request. You can get some info about connection like client's IP etc... 
+                            Argument <i>path</i> is just string of request. For example:<br>
+                            Some one wants to see cats so he search for <i>http://hostname:port/wanna/see/pussy</i>. 
+                            And in this case <i>path</i> will be "/wanna/see/pussy"<br>
+                            Last argument <i>auth</i> is object created in <i>authorization.py</i> if it is enabled. 
+                            More about this later.
+                        </p>
+                    </li>
+                    <li class="num">
+                        <span class="hd3">Example controller</span>
+                        <p>
+                            Now you know almost everything you need to know to create your own controller. 
+                            There are some functions that was not described yet. Those will be of course later.<br>
+                            Controller will handle two endpoints:<br>
+                            /calculator/sum<br>
+                            /calculator/sub<br>
+                            <figure>
+                                <figcaption>Example controller:</figcaption>
+                                <pre><code class="language-python">
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from cheese.modules.cheeseController import CheeseController
+
+#@controller /calculator
+class CalculatorController(CheeseController):
+
+    """
+    sum two numbers in request body and return result
+    body looks for example like this:
+    {
+    "NUM1": 1,
+    "NUM2": 5
+    }
+    so result will looks like this:
+    {
+    "RESPONSE": 6
+    }
+    """
+    #@post /sum
+    @staticmethod
+    def sum(server, path, auth):
+
+        #reads arguments from body of request 
+        args = CheeseController.readArgs(server)
+                
+        #arguments
+        num1 = int(args["NUM1"])
+        num2 = int(args["NUM2"])
+
+        result = num1 + num2
+
+        response = CheeseController.createResponse({"RESPONSE": result}, 200)
+        CheeseController.sendResponse(server, response)
+
+    """
+    substract two numbers in request path and return result
+
+    path looks for example like this:
+    localhost:8000/calculator/sub?num1=5&num2=3
+
+    so result will looks like this:
+    {
+    "RESPONSE": 2
+    }
+    """
+    #@get /sub
+    @staticmethod
+    def sub(server, path, auth):
+    
+        #reads arguments from endpoint path 
+        args = CheeseController.getArgs(server)
+        
+        #arguments
+        num1 = int(args["num1"])
+        num2 = int(args["num2"])
+        
+        result = num1 - num2
+        
+        response = CheeseController.createResponse({"RESPONSE": result}, 200)
+        CheeseController.sendResponse(server, response)
+                                        </code></pre></figure>
+                        </p>
+                    </li>
+                </ol>
+            </li>
+            <li class="num">
+                <span class="hd3">Models</span>
+                <p>
+                    Models are classes for storing data from database. Again, one folder for them.<br>
+                    One instance of model is one row of database table. Model needs only one annotation above class definition
+                    <b>#@model</b> and has to inherit from CheeseModel.<br>
+                    Arguments in initializer (constructor) should be indentic as scheme of table.<br>
+                    <figure>
+                        <figcaption>Model for table users with columns "id", "name", "age":</figcaption>
+                        <pre><code class="language-python">
+from cheese.modules.cheeseModel import CheeseModel
+
+#@model
+class User(CheeseModel):
+
+    def __init__(self, id=None, name=None, age=None):
+        self.id = id
+        self.name = name
+        self.age = age
+                    </pre></code></figure>
+                    <br>
+                    It is very useful but not necessary create a method toJson() which returns dictionary with data of model.
+                    <figure>
+                        <figcaption>toJson() method of model:</figcaption>
+                        <pre><code class="language-python">
+def toJson(self):
+    response = {
+        "ID": self.id,
+        "NAME": self.name,
+        "AGE": self.age,
+    }
+    return response
+                    </pre></code></figure>
+                </p>
+            </li>
+            <li class="num">
+                <span class="hd3">Repositories</span>
+                <div class="needBuild">NEED BUILD</div>
+                <p>
+                    Repository is like access into one table of database. There are methods that communicate with database.
+                </p>
+                <ol class="num">
+                    <li class="num">
+                        <span class="hd3">Create repository</span>
+                        <div class="needBuild">NEED BUILD</div>
+                        <p>
+                            Repositories are last but most complex part of Cheese Framework. They are again classes but there 
+                            need to be more annotations. Also repository have to inherits from <i>CheeseRepository</i><br>
+                            First annotation is <b>#@repository</b>, so cheeser knows this is repository, followed by name of table.<br>
+                            Second annotation is <b>#@dbscheme</b> followed by name of table's columns in brackets where 
+                            first should be <b>Primary Key</b>.<br>
+                            <figure>
+                                <figcaption>IMPORTANT</figcaption>
+                                <div class="note">
+                                    Column names need to be in same order as in model initializer!!<br>
+                                    But do not have same names.
+                                </div>
+                            </figure>
+                            Last annotation is <b>#@dbmodel</b> followed by name of model for the table.
+                            <figure>
+                                <pre><code class="language-python">
+from cheese.modules.cheeseRepository import CheeseRepository
+
+#@repository users
+#@dbscheme (id, user_name, age)
+#@dbmodel User
+class PasswordRepository(CheeseRepository):
+                                    </code></pre></figure>
+                        </p>
+                    </li>
+                    <li class="num">
+                        <span class="hd3">Methods of repository</span>
+                        <div class="needBuild">NEED BUILD</div>
+                        <p>
+                            Method scheme is again very strict. They need to be static and every method needs to have this line 
+                            in it's body:
+                            <figure>
+                                <figcaption>More line query:</figcaption>
+                                <pre><code class="language-python">
+return CheeseRepository.methodName([arg1, arg2])
+                                    </code></pre></figure>
+                            <figure>
+                                <figcaption>Note:</figcaption>
+                                <div class="note">
+                                    <i>arg1</i> and <i>arg2</i> are method's arguments. methodName have to be same as is in 
+                                    repository and arguments needs to be as list [].
+                                </div>
+                            </figure><br>
+                            There are two types of SQL query annotations <i>query</i> and <i>commit</i>.<br><br>
+                            <ul>
+                                <li>
+                                    <b>#@query</b><br><br>
+                                    This annotation says that we want to get data from database. It is followed by SQL query.
+                                    This query can be more than one line but have to be in quotation marks and the 
+                                    query must ends with semicolon.<br><br>
+                                    <figure>
+                                        <figcaption>More line query:</figcaption>
+                                        <pre><code class="language-python">
+#@query "select * from users
+#           where age > 20;"
+                                            </code></pre></figure>
+                                    With <b>#@query</b> annotation is related annotation <b>#@return</b>. It determines type of 
+                                    return. if annotation <b>#@return</b> is missing it is default.<br><br>
+                                    <ul>
+                                        <li>
+                                            DEFAULT - Returns raw data what get from database. Mostly it is tuple of tuples.
+                                            <pre><code class="language-python">#@return raw</code></pre>
+                                        </li><br>
+                                        <li>
+                                            Returns array of models.
+                                            <pre><code class="language-python">#@return array</code></pre>
+                                        </li><br>
+                                        <li>
+                                            Returns only one model. If there is more results returns first.
+                                            <pre><code class="language-python">#@return one</code></pre>
+                                        </li><br>
+                                        <li>
+                                            Returns logical value.
+                                            <pre><code class="language-python">#@return bool</code></pre>
+                                            <figcaption>#@retrun bool example:</figcaption>
+                                        <pre><code class="language-python">
+#@query "select case when exists
+#       (select * from tokens t where t.token = :token)
+#       then cast(0 as bit)
+#       else cast(1 as bit) end;"
+#@return bool
+                                            </code></pre></figure>
+                                        </li><br>
+                                        <li>
+                                            Returns numeric value.
+                                            <pre><code class="language-python">#@return num</code></pre>
+                                            <figcaption>#@return bool example:</figcaption>
+                                        <pre><code class="language-python">
+#@query "select count(*) from users;"
+#@return num
+                                            </code></pre></figure>
+                                        </li>
+                                    </ul>
+                                    
+                                 </li><br>
+                                 <li>
+                                    <b>#@commit</b>
+                                    This annotation is for writing data into database. 
+                                    <figure>
+                                        <figcaption>Commit query:</figcaption>
+                                        <pre><code class="language-python">
+#@query "select * from users;"
+                                            </code></pre></figure>
+                                    You will need it only when you want 
+                                    to change <b>Primary Key</b> of some row because there are three prebuilded methods that you should 
+                                    add into your repository. Those methods does not have any annotation and accepts only models.
+                                    The <i>update</i> and <i>delete</i> method search rows by <b>Primary Key</b> so if you want 
+                                    to update row's <b>Primary Key</b> you need to write your own SQL query. 
+                                    <figure>
+                                        <figcaption>Prebuilded methods:</figcaption>
+                                        <pre><code class="language-python">
+#SQL = insert
+@staticmethod
+def save(obj):
+    return CheeseRepository.save([obj])
+
+#SQL = update
+@staticmethod
+def update(obj):
+    return CheeseRepository.update([obj])
+
+#SQL = delete
+@staticmethod
+def delete(obj):
+    return CheeseRepository.delete([obj])
+                                            </code></pre></figure>
+                                    <p>
+                                        Arguments of methods could be insert into SQL query via ":".<br>
+                                        <figure>
+                                            <figcaption>Variables in SQL query:</figcaption>
+                                            <pre><code class="language-python">
+#@query "select * from users where name = :name and age > :age;"
+def findUserByNameOlderThan(name, age):
+    return CheeseRepository.findUserByName([name, age])
+                                                </code></pre></figure>
+                                    </p>
+                                 </li>
+                             </ul>
+                        </p>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+    </li>
+</ol>
 </body>
 </html>
