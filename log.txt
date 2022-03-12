@@ -1,7 +1,0 @@
-21:07:58 - CheeseDocumentation.py-><module>: 
-
-==========Start in file c:\Users\Jakub Anderle\Desktop\programy\CheeseFramework\projects\CheeseDocumentation==========
-21:07:58 - database.py->connect: CONNECTED TO localhost:5432 frogie_database
-21:08:00 - CheeseDocumentation.py-><module>: Server Starts - 0.0.0.0:8002
-21:08:04 - cheeseServer.py->do_GET: Serving file: c:\Users\Jakub Anderle\Desktop\programy\CheeseFramework\projects\CheeseDocumentation/src/resources/web/index.html
-21:08:04 - cheeseServer.py->do_GET: Serving file: c:\Users\Jakub Anderle\Desktop\programy\CheeseFramework\projects\CheeseDocumentation/src/resources/web/favicon.ico

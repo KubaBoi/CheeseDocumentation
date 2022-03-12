@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
     while True:
         try:
-            requests.post(f"http://localhost/services/doYouKnowMe?name=Cheese_Documentations&icon=frogieCloudBlack.png&port={Settings.port}&color=85FF77", data='{"TOKEN":"serviceToken"}')
+            requests.post(f"http://localhost/services/doYouKnowMe?name=Cheese_Documentations&icon=documentation300x300.png&port={Settings.port}&color=85FF77", data='{"TOKEN":"serviceToken"}')
             break
         except:
             time.sleep(1)
