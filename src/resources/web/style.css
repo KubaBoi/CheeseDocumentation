@@ -18,6 +18,33 @@ li.num:before {
     font-weight: bold;
 }
 
+#toc_container {
+    border: 1px solid #aaa;
+    display: table;
+    font-size: 95%;
+    margin-bottom: 1em;
+    padding: 20px;
+    width: auto;
+}
+
+.toc_title {
+    font-weight: 700;
+    text-align: center;
+}
+
+#toc_container li, #toc_container li {
+    list-style: outside none none !important;
+}
+#toc_container ol {
+    counter-reset: item;
+}
+#toc_container li { display: block }
+#toc_container li:before {
+    content: counters(item, ".") " ";
+    counter-increment: item; 
+    font-weight: bold;
+}
+
 .hd2 {
     font-size: 25px;
     font-weight: bold;

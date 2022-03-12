@@ -10,9 +10,61 @@
 <script src="prism.js"></script>
 
 <h1>Cheese Framework Documentation</h1>
+
+<div id="toc_container">
+    <p class="toc_title">Contents</p>
+    <ol>
+        <li>
+            <a href="#1">Introduction</a>
+        </li>
+        <li>
+            <a href="#2">Installation
+            <ol>
+                <li><a href="#2.1">Download</a></li>
+                <li><a href="#2.2">Creating New project</a></li>
+                <li><a href="#2.3">Run Cheese application</a></li>
+            </ol>
+        </li>
+        <li><a href="#3">Project structure</a></li>
+        <li><a href="#4">Project settings</a></li>
+        <li>
+            <a href="#5">Python code</a>
+            <ol>
+                <li>
+                    <a href="#5.1">API Controllers</a>
+                    <ol>
+                        <li><a href="#5.1.1">Create controller</a></li>
+                        <li><a href="#5.1.2">Methods of controller</a></li>
+                        <li><a href="#5.1.3">Method arguments</a></li>
+                        <li><a href="#5.1.4">Example controller</a></li>
+                    </ol>
+                </li>
+                <li><a href="#5.2">Models</a></li>
+                <li>
+                    <a href="#5.3">Repositories</a>
+                    <ol>
+                        <li><a href="#5.3.1">Create repository</a></li>
+                        <li><a href="#5.3.2">Methods of repository</a></li>
+                    </ol>
+                </li>
+            </ol>
+        </li>
+        <li>
+            <a href="#6">Cheese functions</a>
+            <ol>
+                <li><a href="#6.1">CheeseController</a></li>
+                <li><a href="#6.2">Settings</a></li>
+                <li><a href="#6.3">Error</a></li>
+                <li><a href="#6.4">Logger</a></li>
+                <li><a href="#6.5">ResMan</a></li>
+            </ol>
+        </li>
+    </ol>
+    </div>
+
 <ol class="num">
     <li class="num">
-        <span class="hd2">Introduction</span>
+        <span class="hd2" id="1">Introduction</span>
         <p>
             Cheese Framework is open source library for creating web applications with database connection (like Spring in Java).  
             It can save a lot of time because developer does not have to making http server or creating whole database reader. 
@@ -20,10 +72,10 @@
         </p>
     </li>
     <li class="num">
-        <span class="hd2">Installation</span><br><br>
+        <span class="hd2" id="2">Installation</span><br><br>
         <ol class="num">
             <li class="num">
-                <span class="hd3">Download</span>
+                <span class="hd3" id="2.1">Download</span>
                 <p>
                     Download Cheese Framework <a href="https://github.com/KubaBoi/CheeseFramework" target="_blank">here</a> via git.<br>
                     You will need install some python libraries via pip:
@@ -36,7 +88,7 @@
                 </p>
             </li>
             <li class="num">
-                <span class="hd3">Creating new project</span>
+                <span class="hd3" id="2.2">Creating new project</span>
                 <p>
                     Go in directory where you downloaded Cheese and into CheeseFramework folder.
                     <figure>
@@ -55,7 +107,7 @@ python cheeser.py -b CheeseApplication
                 </p>
             </li>
             <li class="num">
-                <span class="hd3">Run Cheese application</span>
+                <span class="hd3" id="2.3">Run Cheese application</span>
                 <p>
                     Whole application turns on by python script {name of your project}/src/{name of your project}.py.
                     <figure>
@@ -70,7 +122,7 @@ python projects/CheeseApplication/src/CheeseApplication.py
         </ol>
     </li>
     <li class="num">
-        <span class="hd2">Project structure</span>
+        <span class="hd2" id="3">Project structure</span>
         <p>
             In your project folder should be one folder named <i>src</i> and two files <i>.gitignore</i>, <i>appSettings</i>.<br>
             Folder <i>src</i> contains source code of your application. 
@@ -120,7 +172,7 @@ if __name__ == "__main__":
         </p>
     </li>
     <li class="num">
-        <span class="hd2">Project settings</span>
+        <span class="hd2" id="4">Project settings</span>
         <p>
             All settings are stored in file <i>appSettings.json</i> and looks like this:<br>
             <figure>
@@ -170,20 +222,20 @@ if __name__ == "__main__":
         </p>
     </li>
     <li class="num">
-        <span class="hd2">Python code</span>
+        <span class="hd2" id="5">Python code</span>
         <p>
             Reminding that every python code needs to be in <i>src/python</i> folder.
         </p>
         <ol class="num">
             <li class="num">
-                <span class="hd3">API Controllers</span>
+                <span class="hd3" id="5.1">API Controllers</span>
                 <p>
                     Controllers are classes that handle requested endpoints. I recommend to create one folder just 
                     for your controllers but it is not necessary.
                 </p>
                 <ol class="num">
                     <li class="num">
-                        <span class="hd3">Creating controller</span>
+                        <span class="hd3" id="5.1.1">Create controller</span>
                         <div class="needBuild">NEED BUILD</div>
                         <p>
                             As I said, controllers are classes. So create class that inherits from <i>CheeseController</i>.<br>
@@ -198,7 +250,7 @@ class apiController(CheeseController):
                         </p>
                     </li>
                     <li class="num">
-                        <span class="hd3">Methods of controller</span>
+                        <span class="hd3" id="5.1.3">Methods of controller</span>
                         <div class="needBuild">NEED BUILD</div>
                         <p>
                             There is sctrict scheme how should method in controller looks so it can handle endpoint.<br>
@@ -216,7 +268,7 @@ def getFiles(server, path, auth):
                         </p>
                     </li>
                     <li class="num">
-                        <span class="hd3">Method arguments</span>
+                        <span class="hd3" id="5.1.3">Method arguments</span>
                         <p>
                             So what are those 3 arguments? Argument number one <i>server</i> is instance of Cheese server handeling 
                             this request. You can get some info about connection like client's IP etc... 
@@ -228,7 +280,7 @@ def getFiles(server, path, auth):
                         </p>
                     </li>
                     <li class="num">
-                        <span class="hd3">Example controller</span>
+                        <span class="hd3" id="5.1.4">Example controller</span>
                         <p>
                             Now you know almost everything you need to know to create your own controller. 
                             There are some functions that was not described yet. Those will be of course later.<br>
@@ -306,7 +358,7 @@ class CalculatorController(CheeseController):
                 </ol>
             </li>
             <li class="num">
-                <span class="hd3">Models</span>
+                <span class="hd3" id="5.2">Models</span>
                 <p>
                     Models are classes for storing data from database. Again, one folder for them.<br>
                     One instance of model is one row of database table. Model needs only one annotation above class definition
@@ -341,14 +393,14 @@ def toJson(self):
                 </p>
             </li>
             <li class="num">
-                <span class="hd3">Repositories</span>
+                <span class="hd3" id="5.3">Repositories</span>
                 <div class="needBuild">NEED BUILD</div>
                 <p>
                     Repository is like access into one table of database. There are methods that communicate with database.
                 </p>
                 <ol class="num">
                     <li class="num">
-                        <span class="hd3">Create repository</span>
+                        <span class="hd3" id="5.3.1">Create repository</span>
                         <div class="needBuild">NEED BUILD</div>
                         <p>
                             Repositories are last but most complex part of Cheese Framework. They are again classes but there 
@@ -376,7 +428,7 @@ class PasswordRepository(CheeseRepository):
                         </p>
                     </li>
                     <li class="num">
-                        <span class="hd3">Methods of repository</span>
+                        <span class="hd3" id="5.3.2">Methods of repository</span>
                         <div class="needBuild">NEED BUILD</div>
                         <p>
                             Method scheme is again very strict. They need to be static and every method needs to have this line 
@@ -491,6 +543,198 @@ def findUserByNameOlderThan(name, age):
                         </p>
                     </li>
                 </ol>
+            </li>
+        </ol>
+    </li>
+    <li class="num">
+        <span class="hd2" id="6">Cheese functions</span>
+        <p>
+            There is a lot of classes and functions which Cheese Framework at its disposal. Here is list of them.
+        </p>
+        <ol class="num">
+            <li class="num">
+                <span class="hd3" id="6.1">CheeseController</span>
+                <figure>
+                    <figcaption>Import:</figcaption>
+                    <pre><code class="language-python">
+from cheese.modules.cheeseController import CheeseController
+                        </code></pre></figure>
+                <p>
+                    This is REST controller.
+                    <ul>
+                        <li>
+                            <b>getClientAddress(server)</b><br><br>
+                            Returns IP address of client which send request. 
+                            <ul><li><b>server:</b><br>instance of Cheese server handeling request</li></ul>
+                        </li><br>
+                        <li>
+                            <b>createResponse(dict, code)</b><br><br>
+                            Returns HTTP response in form for send back to client.<br><br>
+                            <ul>
+                                <li>
+                                    <b>dict:</b><br>
+                                    dictionary with informations<br>
+                                    <figcaption>Example:</figcaption>
+                    <pre><code class="language-python">
+dict = {"REPONSE": "hello"}
+                        </code></pre></figure>
+                                </li><br>
+                                <li><b>code:</b><br>HTTP status code of your response</li>
+                            </ul> 
+                        </li><br>
+                        <li>
+                            <b>modulesToJsonArray(modules)</b><br><br>
+                            Returns array of models but in json. Using toJson() method from model.
+                            <ul><b>modules:</b><br>array of models</ul> 
+                        </li><br>
+                        <li>
+                            <b>getTime(addTime=0)</b><br><br>
+                            Returns UNIX timestamp and adds it to addTime (in seconds).
+                            <ul><b>addTime:</b><br>time in seconds added to current time</ul> 
+                        </li><br>
+                        <li>
+                            <b>validateJson(keys, dict)</b><br><br>
+                            Returns True if every single item in keys appears in dict.
+                            <ul><b>keys:</b><br>array of strings, keys for dictionary</ul> 
+                            <ul><b>dict:</b><br>validated dictionary</ul> 
+                        </li><br>
+                        <li>
+                            <b>getPath(url)</b><br><br>
+                            Returns part of url before ?.
+                            <ul><b>url:</b><br>url</ul> 
+                        </li><br>
+                        <li>
+                            <b>getArgs(url)</b><br><br>
+                            Returns dictionary of arguments from rest request url.
+                            <ul><b>url:</b><br>url</ul>
+                        </li><br>
+                        <li>
+                            <b>readArgs(server)</b><br><br>
+                            Returns arguments from body of request.
+                            <ul><li><b>server:</b><br>instance of Cheese server handeling request</li></ul>
+                        </li><br>
+                        <li>
+                            <b>sendResponse(server, response, contentType="text/html")</b><br><br>
+                            Sends response created with createResponse.
+                            <ul>
+                                <li><b>server:</b><br>instance of Cheese server handeling request</li>
+                                <li><b>response:</b><br>response created with createResponse</li>
+                                <li><b>contentType:</b><br>type of content :D</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </p>
+            </li><br>
+            <li class="num">
+                <span class="hd3" id="6.2">Settings</span>
+                <figure>
+                    <figcaption>Import:</figcaption>
+                    <pre><code class="language-python">
+from cheese.appSettings import Settings
+                        </code></pre></figure>
+                <p>
+                    This is access to read appSettings.
+                    <pre><code class="language-python">Settings.host</code></pre>
+                    <pre><code class="language-python">Settings.port</code></pre>
+                    <pre><code class="language-python">Settings.dbDriver</code></pre>
+                    <pre><code class="language-python">Settings.dbHost</code></pre>
+                    <pre><code class="language-python">Settings.dbName</code></pre>
+                    <pre><code class="language-python">Settings.dbUser</code></pre>
+                    <pre><code class="language-python">Settings.dbPassword</code></pre>
+                    <pre><code class="language-python">Settings.dbPort</code></pre>
+                    <pre><code class="language-python">Settings.allowCommit</code></pre>
+                    <pre><code class="language-python">Settings.allowMultiThreading</code></pre>
+                    <pre><code class="language-python">Settings.allowCORS</code></pre>
+                    <pre><code class="language-python">Settings.allowDB</code></pre>
+                </p>
+            </li><br>
+            <li class="num">
+                <span class="hd3" id="6.3">Error</span>
+                <figure>
+                    <figcaption>Import:</figcaption>
+                    <pre><code class="language-python">
+from cheese.ErrorCodes import Error
+                        </code></pre></figure>
+                <p>
+                    Prebuilded error responses and ability to create custom error responses.
+                    <figure><figcaption>Bad request 400 - Wrong json structure</figcaption>
+                        <pre><code class="language-python">Error.BadJson</code></pre></figure>
+                    <figure><figcaption>Unauthorized 401 - Old password</figcaption>
+                        <pre><code class="language-python"></code>Error.OldPass</code></pre></figure>
+                    <figure><figcaption>Unauthorized 401 - Wrong credentials</figcaption>
+                        <pre><code class="language-python"></code>Error.BadCred</code></pre></figure>
+                    <figure><figcaption>Unauthorized 401 - Unable to authorize with this token</figcaption>
+                        <pre><code class="language-python"></code>Error.BadToken</code></pre></figure>
+                    <figure><figcaption>Unauthorized 401 - Access denied</figcaption>
+                        <pre><code class="language-python"></code>Error.AccDenied</code></pre></figure>
+                    <figure><figcaption>File not found 404 - File not found</figcaption>
+                        <pre><code class="language-python"></code>Error.FileNotFound</code></pre></figure>
+                    <ul>
+                        <li>
+                            <b>sendCustomError(server, comment, code)</b><br><br>
+                            Create and send custom error.
+                            <ul>
+                                <li><b>server:</b><br>instance of Cheese server handeling request</li>
+                                <li><b>comment:</b><br>comment of error</li>
+                                <li><b>code:</b><br>HTTP status code of error</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </p>
+            </li><br>
+            <li class="num">
+                <span class="hd3" id="6.4">Logger</span>
+                <figure>
+                    <figcaption>Import:</figcaption>
+                    <pre><code class="language-python">
+from cheese.Logger import Logger
+                        </code></pre></figure>
+                <p>
+                    Prints logs and saves them into /log.log. And provides text colors.
+                    <pre><code class="language-python">HEADER</code></pre>
+                    <pre><code class="language-python">OKBLUE</code></pre>
+                    <pre><code class="language-python">OKCYAN</code></pre>
+                    <pre><code class="language-python">OKGREEN</code></pre>
+                    <pre><code class="language-python">WARNING</code></pre>
+                    <pre><code class="language-python">FAIL</code></pre>
+                    <pre><code class="language-python">ENDC</code></pre>
+                    <pre><code class="language-python">BOLD</code></pre>
+                    <pre><code class="language-python">UNDERLINE</code></pre><br>
+                    <ul>
+                        <li><b>info(message)</b><br><br>info log</li><br>
+                        <li><b>okBlue(message)</b><br><br>okBlue log</li><br>
+                        <li><b>okCyan(message)</b><br><br>okCyan log</li><br>
+                        <li><b>okGreen(message)</b><br><br>okGreen log</li><br>
+                        <li><b>warning(message)</b><br><br>warning log</li><br>
+                        <li><b>fail(message)</b><br><br>fail log</li><br>
+                        <li><b>bold(message)</b><br><br>bold log</li><br>
+                        <li><b>underline(message)</b><br><br>underline log</li><br>
+                    </ul>
+                </p>
+            </li><br>
+            <li class="num">
+                <span class="hd3" id="6.5">ResMan</span>
+                <figure>
+                    <figcaption>Import:</figcaption>
+                    <pre><code class="language-python">
+from cheese.ResourceManager import ResMan
+                        </code></pre></figure>
+                <p>
+                    <ul>
+                        <li><b>getFileName(path)</b><br><br>Returns name of file from path.</li><br>
+                        <li><b>getRelativePathFrom(path, fromPath)</b><br><br>Return relative path from.</li><br>
+                        <li><b>removeSlash(path, start=True)</b><br><br>Remove / from start or end.</li><br>
+                        <li><b>joinPath(path1, path2)</b><br><br>Joins two path together.</li><br>
+                        <li><b>joinArray(array)</b><br><br>Joins array together.</li><br>
+                        <li><b>root()</b><br><br>Root dir of project.</li><br>
+                        <li><b>src()</b><br><br>All source codes of project.</li><br>
+                        <li><b>pythonSrc()</b><br><br>Python source codes dir.</li><br>
+                        <li><b>resources()</b><br><br>Other resources of project.</li><br>
+                        <li><b>tests()</b><br><br>Tests.</li><br>
+                        <li><b>web()</b><br><br>Dir from which CheeseFramework is able to serve files (index.html).</li><br>
+                        <li><b>error()</b><br><br>Dir for error sites.</li><br>
+                    </ul>
+                </p>
             </li>
         </ol>
     </li>
