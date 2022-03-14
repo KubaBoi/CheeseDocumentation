@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import json
+
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from socketserver import ThreadingMixIn
-import threading
 
 from cheese.appSettings import Settings
 from cheese.modules.cheeseController import CheeseController
@@ -28,6 +29,10 @@ class CheeseServer(HTTPServer):
 
 class CheeseHandler(BaseHTTPRequestHandler):
     def do_GET(self):
+        if (self.path.startswith("/logs") and Settings.allowLogReader):
+            CheeseController.sendResponse(self, Logger.serveLogs(self), "text/html")
+            return
+        self.__log()
         if (self.path == "/alive"):
             CheeseController.sendResponse(self, CheeseController.createResponse({"RESPONSE": "Yes"}, 200))
             return
@@ -41,19 +46,29 @@ class CheeseHandler(BaseHTTPRequestHandler):
                 CheeseController.serveFile(self, self.path)
         
         except Exception as e:
-            Logger.fail(str(e))
+            Logger.fail("An error occurred", e)
             Error.sendCustomError(self, "Internal server error :(", 500)
 
     def do_POST(self):
+        self.__log()
         try:
             auth = None
 
 
         except Exception as e:
-            Logger.fail(str(e))
+            Logger.fail("An error occurred", e)
             Error.sendCustomError(self, "Internal server error :(", 500)
 
     def end_headers(self):
         if (Settings.allowCORS):
-            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header("Access-Control-Allow-Origin", "*")
             BaseHTTPRequestHandler.end_headers(self)
+        else:
+            self.send_header("Content-type", "application/json")
+
+    def log_message(self, format, *args):
+        return
+
+    def __log(self):
+        Logger.okGreen(f"{self.client_address[0]} - {self.command} \"{self.path}\"")
+
